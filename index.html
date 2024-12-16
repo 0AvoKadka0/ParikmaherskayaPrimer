@@ -3,306 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <title>Парикмахерская - Главная</title>
+    <title>Парикмахерская Butterfly</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <style>
-        * {
-            box-sizing: border-box;
+        :root {
+            --swiper-bg-color-light: #ffffff; /* Цвет фона слайдера для светлой темы */
+            --swiper-bg-color-dark: #2c2c2c;  /* Цвет фона слайдера для тёмной темы */
         }
 
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #ffffff; /* Светлая тема по умолчанию */
+            color: #000000;
+            transition: background-color 0.3s, color 0.3s; /* Плавный переход */
         }
 
         header {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
+            background-color: #000000;
+            color: #ffffff;
+            padding: 15px;
             text-align: center;
             position: relative;
-        }
-
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: white;
-            position: absolute;
-            top: 10px;
-            right: 10px;
         }
 
         nav {
-            display: none; /* Скрываем навигацию по умолчанию на мобильных устройствах */
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        nav.active {
-            display: block; /* Показываем навигацию, когда бургер-меню активно */
-        }
-
-        header nav ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        header nav ul li {
-            display: inline;
+        nav a {
+            color: #ffffff;
             margin: 0 15px;
-        }
-
-        header nav ul li a {
-            color: #fff;
             text-decoration: none;
         }
 
-        .banner {
-            position: relative;
+        /* Бургер-меню */
+        .burger {
+            display: none; /* Скрыть по умолчанию */
+            flex-direction: column;
+            cursor: pointer;
+            margin-top: 10px; /* Отступ для бургер-меню */
         }
 
-        .banner img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .line {
+            height: 4px;
+            width: 30px;
+            background-color: white;
+            margin: 4px 0;
+            transition: 0.3s; /* Плавный переход для линий */
         }
 
-        .banner-text {
+        .menu {
+            display: none; /* Скрыть меню по умолчанию */
+            flex-direction: column;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px; /* Уменьшили внутренний отступ для уменьшения текста */
-            border-radius: 10px;
-            width: 90%; /* Ограничиваем ширину текста */
-            max-width: 400px; /* Максимальная ширина для больших экранов */
-            overflow: hidden; /* Прячем текст, который выходит за пределы */
-        }
-
-        .banner-text h2 {
-            font-size: 2rem; /* Уменьшаем размер заголовка */
-            margin: 0;
-        }
-
-        .banner-text p {
-            font-size: 0.9rem; /* Уменьшаем размер текста подзаголовка */
-        }
-
-        .swiper-container {
+            background-color: #000;
+            top: 60px; /* Расположение под заголовком */
+            left: 0;
             width: 100%;
-            height: 350px;
-            position: relative;
+            z-index: 10;
+        }
+
+        .menu.open {
+            display: flex; /* Показать меню при открытии */
+        }
+
+        .menu a {
+            color: #ffffff;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .welcome {
+            background-image: url('welcome.jpg'); /* Замените на путь к изображению */
+            background-size: cover;
+            height: 300px;
+            display: flex;
+            align-items: center; /* Центрирование по вертикали */
+            justify-content: center; /* Центрирование по горизонтали */
+            color: #ffffff;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            text-align: center; /* Центрирование текста */
+        }
+
+        .services, .master, .contacts {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .master img {
+            border-radius: 15px;
+            width: 200px; /* Мобильная версия */
+        }
+
+        /* Стили для Swiper */
+        .swiper {
+            width: 100%; /* Ширина на всю страницу */
+            height: auto; /* Высота автоматически подстраивается */
+            background-color: var(--swiper-bg-color-light); /* Фоновый цвет слайдера по умолчанию */
+            transition: background-color 0.3s; /* Плавный переход */
+        }
+
+        .swiper-wrapper {
+            height: 300px; /* Высота для слайдов */
         }
 
         .swiper-slide {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            justify-content: center; /* Центрирование по горизонтали */
+            align-items: center; /* Центрирование по вертикали */
+            background: transparent; /* Прозрачный фон для слайда */
+            height: 100%; /* Высота слайда */
         }
 
         .swiper-slide img {
-            width: 150px; /* Ширина изображения */
-            height: 300px; /* Высота изображения */
-            object-fit: cover; /* Обеспечивает обрезку изображения с сохранением пропорций */
-            border-radius: 10px; /* Закругляем углы */
-            margin-bottom: 10px;
+            border-radius: 10px; /* Закругление углов изображения */
+            object-fit: cover; /* Сохранение пропорций изображения */
         }
 
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: #333;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 27px;
-            height: 44px;
-            z-index: 10;
+        /* Размеры изображений для мобильной версии */
+        @media (max-width: 600px) {
+            .swiper-slide img {
+                width: 200px; /* Ширина изображения для мобильной версии */
+                height: 300px; /* Высота изображения для мобильной версии */
+            }
+
+            .burger {
+                display: flex; /* Показать бургер-меню на мобильной версии */
+            }
+
+            nav {
+                display: none; /* Скрыть основное меню на мобильной версии */
+            }
         }
 
-        .swiper-button-next {
-            right: 10px;
+        /* Размеры изображений для десктопной версии */
+        @media (min-width: 601px) {
+            .swiper-slide img {
+                width: 300px; /* Уменьшенная ширина изображения для десктопа */
+                height: 533px; /* Высота изображения для десктопа (соотношение 9:16) */
+            }
+
+            .master img {
+                width: 300px; /* Увеличенная ширина для изображения мастера на десктопе */
+                height: auto; /* Автоматическая высота для сохранения пропорций */
+            }
         }
 
-        .swiper-button-prev {
-            left: 10px;
+        h2 {
+            text-align: center; /* Центрирование заголовка */
         }
 
-        section {
+        .works {
             padding: 20px;
-            margin: 20px;
-            background: white;
-            border-radius: 5px;
-        }
-
-        section h2 {
-            text-align: center;
-        }
-
-        .service-list {
-            list-style-type: none;
-            padding: 0;
-            text-align: center;
-        }
-
-        .gallery-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
         }
 
         footer {
+            background-color: #000000;
+            color: #ffffff;
             text-align: center;
-            padding: 10px 0;
-            background: #333;
-            color: #fff;
+            padding: 10px;
         }
 
-        /* Медиа запросы для адаптации */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block; /* Показываем бургер-меню на мобильных */
-            }
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: #fff;
+            margin-top: 10px;
+        }
 
-            header nav ul {
-                display: block; /* Переключаем на блочную навигацию */
-                text-align: center; /* Выравнивание по центру */
-                margin: 0; /* Убираем маргинирование */
-                padding: 10px 0; /* Добавляем внутренний отступ */
-            }
-
-            header nav ul li {
-                display: block; /* Элементы списка по одному */
-                margin: 10px 0; /* Отступ между элементами */
-            }
-
-            .banner-text h2 {
-                font-size: 1.5rem; /* Уменьшаем размер заголовка на мобильных */
-            }
-
-            .banner-text p {
-                font-size: 0.8rem; /* Уменьшаем размер текста подзаголовка на мобильных */
-            }
-
-            .swiper-slide img {
-                width: 100px; /* Уменьшили размер изображений на мобильных */
-                height: 200px; /* Высота изображения на мобильных */
-            }
+        /* Тёмная тема */
+        body.dark-mode {
+            background-color: #2c2c2c; /* Более тёмный фон для тёмной темы */
+            color: #ffffff; /* Белый текст для лучшей читаемости */
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Парикмахерская [Название]</h1>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div> <!-- Бургер-меню -->
-    <nav id="nav-menu">
-        <ul>
-            <li><a href="#services">Услуги</a></li>
-            <li><a href="#masters">Мастера</a></li>
-            <li><a href="#gallery">Галерея</a></li>
-            <li><a href="#contact">Контакты</a></li>
-        </ul>
+    <h1>Парикмахерская Butterfly</h1>
+
+    <!-- Бургер-меню -->
+    <div class="burger" onclick="toggleMenu()">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <nav id="nav">
+        <div class="menu">
+            <a href="#services">Услуги</a>
+            <a href="#master">Мастер</a>
+            <a href="#works">Примеры работ</a>
+            <a href="#contacts">Контакты</a>
+        </div>
+        <!-- Основное меню для десктопа -->
+        <div class="desktop-nav">
+            <a href="#services">Услуги</a>
+            <a href="#master">Мастер</a>
+            <a href="#works">Примеры работ</a>
+            <a href="#contacts">Контакты</a>
+        </div>
     </nav>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌑</button>
 </header>
 
-<section class="banner">
-    <img src="https://salonirlen.ru/images/p-s6.jpg" alt="Парикмахерская" />
-    <div class="banner-text">
-        <h2>Добро пожаловать в нашу парикмахерскую!</h2>
-        <p>Мы предлагаем современные стрижки и высококачественные услуги укладки.</p>
-    </div>
+<div class="welcome">
+    Добро пожаловать в парикмахерскую Butterfly
+</div>
+
+<section id="services" class="services">
+    <h2>Наши Услуги</h2>
+    <p>Детская стрижка от 400-500р.</p>
+    <p>Мужские стрижки 200-600р.</p>
+    <p>Женские стрижки 500-700р.</p>
+    <p>Окрашивание от 700р.</p>
+    <p>Укладка от 500р.</p>
 </section>
 
-<section id="services">
-    <h2>Наши услуги</h2>
-    <ul class="service-list">
-        <li>Мужские стрижки - от 700 рублей</li>
-        <li>Женские стрижки - от 1000 рублей</li>
-        <li>Окрашивание - от 1500 рублей</li>
-        <li>Укладка - от 800 рублей</li>
-        <li>Уход за бородой - от 500 рублей</li>
-    </ul>
+<section id="master" class="master">
+    <h2>Мастер</h2>
+    <img src="./ParikmaherskyaPhoto/master.jpg" alt="Силаева Наталья"> <!-- Замените на путь к изображению мастера -->
+    <p>Силаева Наталья</p>
 </section>
 
-<section id="masters">
-    <h2>Наши мастера</h2>
-    <div class="swiper-container">
+<section id="works" class="works">
+    <h2>Примеры работ</h2>
+    <div class="swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <h3>Иван Петров</h3>
-                <p>Специализация: Мужские стрижки, укладки</p>
-                <img src="https://via.placeholder.com/150" alt="Иван Петров" />
-            </div>
-            <div class="swiper-slide">
-                <h3>Мария Иванова</h3>
-                <p>Специализация: Женские стрижки, окрашивание</p>
-                <img src="https://via.placeholder.com/150" alt="Мария Иванова" />
-            </div>
-            <div class="swiper-slide">
-                <h3>Анна Смирнова</h3>
-                <p>Специализация: Укладка и стрижки для женщин</p>
-                <img src="https://via.placeholder.com/150" alt="Анна Смирнова" />
-            </div>
-            <div class="swiper-slide">
-                <h3>Алексей Ковалев</h3>
-                <p>Специализация: Модные стрижки и бороды</p>
-                <img src="https://via.placeholder.com/150" alt="Алексей Ковалев" />
-            </div>
-            <div class="swiper-slide">
-                <h3>Светлана Петрова</h3>
-                <p>Специализация: Окрашивание и уход за волосами</p>
-                <img src="https://via.placeholder.com/150" alt="Светлана Петрова" />
-            </div>
+            <div class="swiper-slide"><img src="./ParikmaherskyaPhoto/primer0.png" alt="Работа 1"></div> <!-- Замените на свои изображения -->
+            <div class="swiper-slide"><img src="./ParikmaherskyaPhoto/primer2.jpg" alt="Работа 2"></div>
+            <div class="swiper-slide"><img src="./ParikmaherskyaPhoto/primer6.jpg" alt="Работа 3"></div>
+            <div class="swiper-slide"><img src="./ParikmaherskyaPhoto/primer4.jpg" alt="Работа 4"></div>
+            <div class="swiper-slide"><img src="./ParikmaherskyaPhoto/primer7.jpg" alt="Работа 5"></div>
         </div>
+        <!-- Добавим пагинацию и навигацию -->
+        <div class="swiper-pagination"></div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
     </div>
 </section>
 
-<section id="gallery">
-    <h2>Галерея</h2>
-    <div class="gallery-container">
-        <img src="https://images.unsplash.com/photo-1598503320475-4e47e30c0523?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHBhcmVyaGFyJTIwc3RyaXxlbnwwfHx8fDE2MzExOTU0MzQ&ixlib=rb-1.2.1&q=80&w=400" alt="Стрижка 1" />
-        <img src="https://images.unsplash.com/photo-1617414776593-017c69e0fccf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fHBhcmVyaGFyJTIwc3RyaXxlbnwwfHx8fDE2MzExOTU0MzQ&ixlib=rb-1.2.1&q=80&w=400" alt="Стрижка 2" />
-        <img src="https://images.unsplash.com/photo-1507842217081-93b5a2d6aa66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDE3fHxwYXJpc2lkZXxlbnwwfHx8fDE2MzExOTU0MzQ&ixlib=rb-1.2.1&q=80&w=400" alt="Стрижка 3" />
-    </div>
-</section>
-
-<section id="contact">
+<section id="contacts" class="contacts">
     <h2>Контакты</h2>
-    <p>Телефон: [Ваш номер]</p>
-    <p>Email: [Ваш email]</p>
-    <p>Адрес: [Ваш адрес]</p>
-    <p>Часы работы: Пн-Пт 9:00-20:00, Сб-Вс 10:00-18:00</p>
+    <p>Телефон: 8-928-819-64-58</p>
+    <p>Адрес: пос. Иноземцево, ул. Гагарина, д. 39</p>
+    <p>Часы работы: Пн-Вс с 9:00 до 19:00</p>
 </section>
 
 <footer>
-    <p>© 2024 Парикмахерская [Название]</p>
+    &copy; 2024 Парикмахерская Butterfly
 </footer>
 
+<!-- Подключаем Swiper.js -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
-    const swiper = new Swiper('.swiper-container', {
-        loop: true,
+    // Инициализация Swiper
+    const swiper = new Swiper('.swiper', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        speed: 600, // Устанавливаем скорость анимации (600 мс)
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
     });
 
+    // Функция для переключения темы
+    function toggleTheme() {
+        const body = document.body;
+        const button = document.querySelector('.theme-toggle');
+        body.classList.toggle('dark-mode');
+
+        // Меняем текст кнопки в зависимости от темы
+        if (body.classList.contains('dark-mode')) {
+            button.textContent = '☀️'; // Знак солнца для светлой темы
+        } else {
+            button.textContent = '🌑'; // Знак луны для темной темы
+        }
+
+        // Меняем фон слайдера в зависимости от темы
+        const swiperElement = document.querySelector('.swiper');
+        swiperElement.style.backgroundColor = body.classList.contains('dark-mode') 
+            ? 'var(--swiper-bg-color-dark)' 
+            : 'var(--swiper-bg-color-light)';
+    }
+
+    // Функция для управления бургер-меню
     function toggleMenu() {
-        const nav = document.getElementById('nav-menu');
-        nav.classList.toggle('active'); // Переключаем класс для отображения навигации
+        const menu = document.querySelector(".menu");
+        menu.classList.toggle("open"); // Добавляем или убираем класс "open" для бургер-меню
     }
 </script>
+
 </body>
 </html>
